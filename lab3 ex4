@@ -4,7 +4,7 @@ using namespace std;
 struct vector2d {
 	float x, y;
 };
-void citire(vector2d &v)
+void citire(vector2d& v)
 {
 	cout << "Scrieti vectorul: " << endl;
 	cout << "x=";
@@ -15,7 +15,7 @@ void citire(vector2d &v)
 void afisare(vector2d v)
 {
 	cout << "(" << v.x << "," << v.y << ")";
-	
+
 }
 vector2d suma(vector2d v, vector2d u)
 {
@@ -31,7 +31,7 @@ vector2d diferenta(vector2d v, vector2d u)
 	d.y = v.y - u.y;
 	return d;
 }
-float prodscalar(vector2d v,vector2d u)
+float prodscalar(vector2d v, vector2d u)
 {
 	float a;
 	a = v.x * u.x + v.y * u.y;
@@ -57,17 +57,59 @@ float normaeuclidiana(vector2d v)
 	n = sqrt(v.x * v.x + v.y * v.y);
 	return n;
 }
+void sort(float a[], int n)
+{
+	int schimbat, i;
+	float  aux;
+	do {
+		schimbat = 0;
+		for (i = 0; i < n - 1; i++) {
+			if (a[i] > a[i + 1]) {
+				aux = a[i];
+				a[i] = a[i + 1];
+				a[i + 1] = aux;
+				schimbat = 1;
+			}
+		}
+	} while (schimbat);
+}
 int main()
 {
-	vector2d v,u;
+	vector2d v, u;
+	int n;
 	u.x = 0;
 	u.y = 0;
 	cout << "n=";
 	cin >> n;
-	int s = 0;
-	for(int i=0;i<n;i++)
+	float a[10];
+	float nmin, nmax,ne;
+	citire(v);
+	a[0] = normaeuclidiana(v);
+	u = suma(v, u);
+	nmin = normaeuclidiana(v);
+	nmax = nmin;
+	for (int i = 1; i < n; i++)
+	{
 		citire(v);
-		s=suma(v,u)
-	afisare(v);
+		u = suma(v, u);
+		ne = normaeuclidiana(v);
+		if (ne < nmin)
+				nmin = ne;
+		else nmax = ne;
+		a[i]= normaeuclidiana(v);
+
+	}
+	cout << endl;
+	cout << "STATIC";
+	cout << "pct a" << endl;
+	afisare(u);
+	cout << endl;
+	cout << "pct b" << endl;
+	cout << nmin << " " << nmax << endl;
+	cout << "pct c" << endl;
+	sort(a,n);
+	for (int i = 0; i < n; i++)
+		cout << a[i] << " ";
+
 	return 0;
 }
