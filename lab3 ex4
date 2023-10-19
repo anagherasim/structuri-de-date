@@ -1,0 +1,73 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+struct vector2d {
+	float x, y;
+};
+void citire(vector2d &v)
+{
+	cout << "Scrieti vectorul: " << endl;
+	cout << "x=";
+	cin >> v.x;
+	cout << "y=";
+	cin >> v.y;
+}
+void afisare(vector2d v)
+{
+	cout << "(" << v.x << "," << v.y << ")";
+	
+}
+vector2d suma(vector2d v, vector2d u)
+{
+	vector2d s;
+	s.x = v.x + u.x;
+	s.y = v.y + u.y;
+	return s;
+}
+vector2d diferenta(vector2d v, vector2d u)
+{
+	vector2d d;
+	d.x = v.x - u.x;
+	d.y = v.y - u.y;
+	return d;
+}
+float prodscalar(vector2d v,vector2d u)
+{
+	float a;
+	a = v.x * u.x + v.y * u.y;
+	return a;
+}
+vector2d prodcuscalar(vector2d v, float a)
+{
+	vector2d p;
+	p.x = a * v.x;
+	p.y = a * v.y;
+	return p;
+}
+vector2d opusul(vector2d v)
+{
+	vector2d o;
+	o.x = -v.x;
+	o.y = -v.y;
+	return o;
+}
+float normaeuclidiana(vector2d v)
+{
+	float n;
+	n = sqrt(v.x * v.x + v.y * v.y);
+	return n;
+}
+int main()
+{
+	vector2d v,u;
+	u.x = 0;
+	u.y = 0;
+	cout << "n=";
+	cin >> n;
+	int s = 0;
+	for(int i=0;i<n;i++)
+		citire(v);
+		s=suma(v,u)
+	afisare(v);
+	return 0;
+}
