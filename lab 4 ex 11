@@ -1,0 +1,106 @@
+#include <iostream>
+using namespace std;
+void error(char const msg[])
+{
+    cout << "eroare de executie" << endl;
+    cout << msg << endl;
+    cout << "Programul se opreste" << endl;
+    exit(1);
+}
+struct NOD
+    {
+    int info;
+    NOD *next;
+    };
+typedef NOD* LISTA;
+void adaugaresf(LISTA& vf, int infon)
+{
+    LISTA nou = new(nothrow) NOD;
+    if (nou == nullptr)
+        error("Spatiu insuficient");
+    nou->info = infon;
+    nou->next = nullptr;
+    if (vf == nullptr)
+        vf = nou;
+    else
+    {
+        LISTA p = vf;
+        while (p->next != nullptr)
+            p = p->next;
+        p->next = nou;
+    }
+}
+void adaugaredupa(LISTA vf, int infoc, int infon)
+{
+    if (vf == nullptr)
+    {
+        cout << "Lista este vida" << endl;
+        return;
+    }
+    LISTA p = vf;
+    while (p != nullptr && p->info != infoc)
+        p = p->next;
+    if (p != nullptr)
+    {
+        LISTA nou = new(nothrow) NOD;
+        if (nou == nullptr)
+            error("Spatiu insuficient");
+        nou->info = infon;
+        nou->next = p->next;
+        p->next = nou;
+    }
+    else
+        cout << "Informatia cautata " << infoc << " nu este in lista! Inserarea nu are loc" << endl;
+}
+LISTA crearesflista()
+{
+    int nrn, info;
+    LISTA vf = nullptr;
+    cout << "nr initial de noduri: ";
+    cin >> nrn;
+    for (int i = 1; i <= nrn; i++)
+    {
+        cout << "informatia pt nodul " << i << ": ";
+        cin >> info;
+        adaugaresf(vf, info);
+    }
+    return vf;
+
+}
+
+void afisareLista(LISTA vf)
+{
+    LISTA p = vf;
+    if (p != nullptr)
+        {
+        cout << " LISTA : ";
+        while (p != nullptr)
+            {
+            cout << p->info << " ";
+            p = p->next;
+            }
+        cout << endl;
+        }
+    else
+        cout << " LISTA este vida !" << endl;
+    }
+
+int main()
+{
+    LISTA vf,par,impar;
+    vf=crearesflista();
+    par = nullptr;
+    impar = nullptr;
+    LISTA p = vf;
+    while (p != nullptr)
+    {
+        if (p->info % 2 == 0)
+            adaugaresf(p, p->info);
+        else adaugaresf(impar, p->info);
+        p = p->next;
+    }
+    afisareLista(par);
+    afisareLista(impar);
+    return 0;
+
+}
