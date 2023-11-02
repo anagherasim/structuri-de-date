@@ -1,0 +1,149 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+struct NOD
+	{
+	int info;
+	NOD * next;
+	NOD * back; 
+	};
+typedef NOD* LISTA;
+void error(char const msg[])
+{
+	cout << " Eroare de executie . " << endl;
+	cout << msg << endl;
+	cout << " Programul se opreste . " << endl;
+	exit(1);
+} 
+void adaugareSfarsit(LISTA& vf, LISTA& sf, int infon)
+{
+	LISTA nou = new (nothrow) NOD;
+	if (nou == nullptr)
+		error(" Spatiu insuficient ! ");
+	nou->info = infon;
+	nou->next = nullptr;
+	if (vf == nullptr)
+	{
+		nou->back = nullptr;
+		vf = nou;
+		sf = nou;
+	}
+	else
+	{
+		nou->back = sf;
+		sf->next = nou;
+		sf = nou;
+	}
+}
+LISTA creareSfarsit(LISTA& sf, int& contor)
+{
+	int info;
+	char rasp;
+	bool r;
+	cout << "Doriti sa adaugati un numar de noduri?[D/N]" << endl;
+	cin >> rasp;
+	if(rasp=='D')
+		r=1;
+	else
+		r=0;
+	if (r)
+	{
+		LISTA vf = nullptr;
+		sf = nullptr;
+		cout << " Nr . initial de noduri : ";
+		cin >> contor;
+		for (int i = 1; i <= contor; i++)
+		{
+			cout << " Informatia pt . nodul " << i << " : ";
+			cin >> info;
+			adaugareSfarsit(vf, sf, info);
+		}
+		return vf;
+	}
+	else
+	{
+		char rasp;
+		LISTA vf = nullptr;
+		sf = nullptr;
+		cout << "Introduceti un nod: ";
+		cin >> info;
+		contor = 1;
+		adaugareSfarsit(vf, sf, info);
+		cout << "Doriti sa mai adaugati un nod? ";
+		cin >> rasp;
+		do {
+			cin >> info;
+			adaugareSfarsit(vf, sf, info);
+			contor++;
+			cout << "Doriti sa mai adaugati un nod? ";
+			cin >> rasp;
+		} while (rasp != 'N');
+		return vf;
+	}
+}
+void afisareListaInainte(LISTA vf)
+{		
+	LISTA p = vf;
+	if (p != nullptr)
+		{
+		cout << " LISTA : ";
+		for (; p != nullptr; p = p-> next)
+			cout <<p->info << " ";
+		cout << endl;
+		}
+	else
+		cout << " LISTA este vida ! " << endl;
+}
+void afisareListaInapoi(LISTA sf)
+{
+	LISTA p = sf;
+	 if (p != nullptr)
+		{
+		cout << " LISTA INAPOI : ";
+		for (; p != nullptr; p = p-> back)
+			cout <<p-> info << " ";
+		 cout << endl;
+		}
+	else
+		cout << " LISTA este vida ! " << endl;
+	}
+int palindrom(LISTA vf, LISTA sf)
+{
+	LISTA p = vf;
+	LISTA q = sf;
+	while (p != q && p->back != q)
+	{
+		if (p->info != q->info)
+			return 0;
+		else
+		{
+			p = p->next;
+			q = q->back;
+		}
+	}
+	return 1;
+}
+int main()
+{
+	LISTA sf, vf;
+	int contor=0;
+	sf = new(nothrow) NOD;
+	vf = creareSfarsit(sf,contor);
+	afisareListaInainte(vf);
+	cout << endl;
+	cout << "subpunctul a: ";
+	afisareListaInapoi(sf);
+	cout << endl;
+	cout << "subpunctul b: " << endl;
+	if (palindrom(vf, sf) == 1)
+		cout << "este palindrom" << endl;
+	else cout << "nu este palindrom" << endl;
+	cout << "sunpunctul e: " << endl;
+	cout << "numarul de noduri: " << contor<<endl;
+
+
+
+	return 0;
+}
+	
+	
