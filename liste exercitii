@@ -1,0 +1,765 @@
+#include <iostream>
+using namespace std;
+//STIVA
+/*
+void error(const char msg[])
+{
+	cout << "Eroare de executie";
+	cout << msg << endl;
+	cout << "Programul se opreste";
+	exit(1);
+}
+struct NOD {
+	int info;
+	NOD* next;
+};
+typedef NOD* STIVA;
+void push(STIVA& vf, int infonou)
+{
+	STIVA nou = new(nothrow) NOD;
+	if (nou == nullptr)
+		error("Spatiu insuficient!");
+	nou->info = infonou;
+	nou->next = vf;
+	vf = nou;
+}
+void pop(STIVA& vf)
+{
+	STIVA p = new(nothrow) NOD;
+	if (p == nullptr)
+		error("Spatiu insuficient");
+	p = vf;
+	vf = vf->next;
+	delete p;
+}
+STIVA crearestiva()
+{
+	int n, info;
+	STIVA vf = nullptr;
+	cout << "Nr noduri: ";
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		cout << "Informatia pentru nodul " << i << ": ";
+		cin >> info;
+		push(vf, info);
+	}
+	return vf;
+}
+
+
+
+//LISTE SIMPLU INLANTUITE
+struct NOD {
+	int info;
+	NOD *next;
+};
+typedef NOD* LISTA;
+void error(const char msg[])
+{
+	cout << "Eroare de executie";
+	cout << msg<<endl;
+	cout << "Programul se opreste";
+	exit(1);
+}
+void adaugaresf(LISTA& vf, int infonou)
+{
+	LISTA nou = new(nothrow) NOD;
+	if (nou == nullptr)
+		return;
+	nou->info = infonou;
+	nou->next = nullptr;
+	if (vf == nullptr)
+		vf = nou;
+	else
+	{
+		LISTA p = vf;
+		while (p->next != nullptr)
+			p = p->next;
+		p->next = nou;
+	}
+}
+void adaugareinceput(LISTA& vf, int infonou)
+{
+	LISTA nou = new(nothrow) NOD;
+	if (nou == nullptr)
+		error("Spatiu insuficient");
+	nou->info = infonou;
+	nou->next = vf;
+	vf = nou;
+}
+void adaugaredupa(LISTA& vf, int infoc, int infonou)
+{
+	if (vf == nullptr)
+		error("Lista vida");
+	LISTA p = vf;
+	while (p != nullptr && p->info != infoc)
+		p = p->next;
+	if (p != nullptr)
+	{
+		LISTA nou = new(nothrow) NOD;
+		if (p == nullptr)
+			error("Spatiu insuficient");
+		nou->info = infonou;
+		nou->next = p->next;
+		p->next = nou;
+	}
+	else
+		cout << "informatia cautata nu este in lista";
+}
+void adaugareinainte(LISTA& vf, int infoc, int infonou)
+{
+	if (vf == nullptr)
+		error("Lista este vida");
+	if (vf->info = infoc)
+		adaugareinceput(vf, infonou);
+	else
+	{
+		LISTA p = vf;
+		while (p != nullptr && p->next->info != infoc)
+			p = p->next;
+		if (p->next != nullptr)
+		{
+			LISTA nou = new(nothrow) NOD;
+			if (nou == nullptr)
+				error("spatiu insuficient");
+			nou->info = infonou;
+			nou->next = p->next;
+			p-> next = nou;
+		}
+		else
+			cout << "Informatia nu a fost gasita";
+
+	}
+}
+void stergere(LISTA& vf, int infoc)
+{
+	if (vf == nullptr)
+		error("Lista este vida");
+	LISTA p, q;
+	if (vf->info = infoc)
+	{
+		q = vf;
+		vf = vf->next;
+		delete q;
+	}
+	else
+	{
+		p = vf;
+		while (p != nullptr && p->next->info != infoc)
+			p = p->next;
+		if (p->next != nullptr)
+		{
+			q = p->next;
+			p->next = q->next;
+			delete q;
+		}
+		else
+			cout << "Informatia nu a fost gasita";
+	}
+}
+LISTA creareinceput()
+{
+	int nrn, info;
+	LISTA vf = nullptr;
+	cout << "Nr noduri: ";
+	cin >> nrn;
+	for (int i = 0; i < nrn; i	++)
+	{
+		cout << "Informatia nodului " << i<<" ";
+		cin >> info;
+		adaugareinceput(vf, info);
+	}
+	return vf;
+}
+LISTA crearesfarsit()
+{
+	int nrn, info;
+	LISTA vf = nullptr;
+	cout << "numar noduri: ";
+	cin >> nrn;
+	for (int i = 0; i < nrn; i++)
+	{
+		cout << "Informatia nodului " << i<<" ";
+		cin >> info;
+		adaugaresf(vf, info);
+	}
+	return vf;
+}
+void afisare(LISTA& vf)
+{
+	LISTA p = vf;
+	if (p != nullptr)
+	{
+		cout << "LISTA: " << endl;
+		while (p != nullptr)
+		{
+			cout << p->info;
+			p = p->next;
+		}
+		cout << endl;
+	}
+	else
+		cout << "Lista vida";
+}
+void stergere(LISTA &vf)
+{
+	LISTA p = vf;
+	while (vf != nullptr)
+	{
+		vf = vf->next;
+		delete p;
+		p = vf;
+	}
+}
+
+
+
+//Liste liniare dublu inlantuite
+struct NOD {
+	int info;
+	NOD* next;
+	NOD* back;
+};
+typedef NOD* LISTA;
+void error(const char msg[])
+{
+	cout << "Eroare de executie";
+	cout << msg << endl;
+	cout << "Programul se opreste";
+	exit(1);
+}
+void adaugaresf(LISTA& vf, LISTA& sf, int infonou)
+{
+	LISTA nou = new(nothrow) NOD;
+	if (nou == nullptr)
+		error("Spatiu insuficient");
+	nou->info = infonou;
+	nou->next = nullptr;
+	if (vf == nullptr)
+	{
+		nou->back = nullptr;
+		vf = nou;
+		sf = nou;
+	}
+	else
+	{
+		nou->back = sf;
+		sf->next = nou;
+		sf = nou;
+	}
+}
+void adaugareinceput(LISTA& vf, LISTA& sf, int infonou)
+{
+	LISTA nou = new(nothrow) NOD;
+	if (nou == nullptr)
+		error("Spatiu insuficient");
+	nou->info = infonou;
+	nou->back = nullptr;
+	if (vf = nullptr)
+	{
+		nou->next = nullptr;
+		vf = nou;
+		sf = nou;
+	}
+	else
+	{
+		nou->next = vf;
+		vf->back = nou;
+		vf = nou;
+	}
+}
+LISTA creareinceput(LISTA& sf)
+{
+	LISTA vf = nullptr;
+	sf = nullptr;
+	int nrn, info;
+	cout << "Nr noduri :";
+	cin >> nrn;
+	for (int i = 0; i < nrn; i++)
+	{
+		cin >> info;
+		adaugareinceput(vf, sf, info);
+	}
+	return vf;
+}
+LISTA crearesf(LISTA& sf)
+{
+	LISTA vf = nullptr;
+	sf = nullptr;
+	int nrn, info;
+	cout << "nr noduri: ";
+	cin >> nrn;
+	for (int i = 0; i < nrn; i++)
+	{
+		cin >> info;
+		adaugaresf(vf, sf, info);
+	}
+	return vf;
+}
+void adaugaredupa(LISTA vf, LISTA& sf, int infoc, int infonou)
+{
+	if (vf == nullptr)
+		error("Lista e vida");
+	LISTA p = vf;
+	while (p != nullptr && p->info != infoc)
+		p = p->next;
+	if (p != nullptr)
+	{
+		LISTA nou = new(nothrow) NOD;
+		if (nou == nullptr)
+			error("Alocare esuata");
+		nou->info = infoc;//am pus informatia
+		nou->next = p->next;//am facut legaturile
+		nou->back = p;
+		if (p->next != nullptr)
+			p->next->back = nou;//am sters leg vechi
+		p->next = nou;
+		if (p == sf)
+			sf = nou;
+	}
+	else
+		cout << "nu s a gasit informatia";
+}
+void adaugareinainte(LISTA& vf, LISTA sf, int infoc, int infonou)
+{
+	if (vf == nullptr)
+		error("Lista vida");
+	LISTA p = vf;
+	while (p != nullptr && p->info != infoc)
+		p = p->next;
+	if (p != nullptr)
+	{
+		LISTA nou = new(nothrow) NOD;
+		if (nou == nullptr)
+			error("spatiu insuficient");
+		nou->info = infoc;//am incarcat informatia
+		nou->next = p;
+		nou->back = p->back;//am facut legaturile
+		if (p->back != nullptr)
+			p->back->next = nou;
+		p->back = nou;
+		if (p == vf)
+			vf = nou;
+	}
+	else
+		cout << "Nu s-a gasit informatia";
+}
+void stergerenod(LISTA& vf, LISTA& sf, int infoc)
+{
+	if (vf == nullptr)
+		error("Lista vida");
+	LISTA p = vf;
+	while (p != nullptr && p->info != infoc)
+		p = p->next;
+	if (p != nullptr)
+		if (p == vf && p = sf)
+		{
+			vf == nullptr;
+			sf = nullptr;
+			delete p;
+		}
+		else
+			if (p == vf)
+			{
+				vf = vf->next;
+				vf->back == nullptr;
+				delete p;
+			}
+			else
+				if (p == sf)
+				{
+					sf = sf->back;
+					sf->next = nullptr;
+					delete p;
+				}
+				else
+				{
+					p->back->next = p->next;
+					p->next->back = p->back;
+					delete p;
+				}
+	else
+		cout << "Informatia nu a fost gasita";
+}
+void afisareinainte(LISTA  vf)
+{
+	LISTA p = vf;
+	if (p != nullptr)
+	{
+		cout << "LISTA: ";
+		for (; p != nullptr; p = p->next)
+			cout << p->info << " ";
+		cout << endl;
+	}
+	else
+		"Lista e vida";
+}
+void afisareinapoi(LISTA sf)
+{
+	LISTA p = sf;
+	if (p != nullptr)
+	{
+		cout << "LISTA: ";
+		for (; p != nullptr; p = p->back)
+			cout << p->info << " ";
+		cout << endl;
+	}
+	else
+		cout << "Lista vida";
+}
+int cautareinfo(LISTA vf, int infoc)
+{
+	LISTA p = vf;
+	while (p != nullptr)
+	{
+		if (p->info = infoc)
+			return 1;
+		p = p->next;
+	}
+	return 0;
+}
+void stergerelista(LISTA& vf, LISTA& sf)
+{
+	LISTA p;
+	while (vf != nullptr)
+	{
+		p = vf;
+		if (vf == sf)
+		{
+			vf == nullptr;
+			sf = nullptr;
+			delete p;
+		}
+		else
+		{
+			vf = vf->next;
+			vf->back = nullptr;
+			delete p
+		}
+	}
+}
+
+
+//liste circulare simplu inlantuite
+struct NOD {
+	int info;
+	NOD* next;
+};
+typedef NOD* LISTA;
+void error(const char msg[])
+{
+	cout << msg;
+	exit(1);
+}
+void adaugare(LISTA& crt, int infonou)
+{
+	LISTA nou = new(nothrow) NOD;
+	if (nou == nullptr)
+		error("Alocare esuata");
+	if (crt == nullptr)
+	{
+		crt = nou;
+		crt->next = nou;
+	}
+	else
+	{
+		nou->next = crt->next;//noua legatura
+		crt->next = nou;//stergem vechea leg
+		crt = nou;
+	}
+}
+LISTA creare()
+{
+	LISTA crt = nullptr;
+	int nrn, info;
+	cin >> nrn;
+	for (int i = 0; i < nrn; i++)
+	{
+		cin >> info;
+		adaugare(crt, info);
+	}
+	return crt;
+}
+void afisarelista(LISTA crt)
+{
+	LISTA p=crt;
+	//afisarea de face incepand cu nodul crt;
+	if (p != nullptr)
+	{
+		cout << p->info;
+		p = p->next;
+		while (p != crt)
+		{
+			cout << p->info;
+			p = p->next;
+		}
+		cout << endl;
+	}
+	else
+		cout << "Lista vida";
+}
+LISTA cautareinfo(LISTA crt, int infoc)
+{
+	LISTA p = crt;
+	if(p!=nullptr)
+		do {
+			if (p->info = infoc)
+				return p;
+			p = p->next;
+		} while (p != crt);
+		return nullptr;
+}
+void inserareinainte(LISTA& crt, int infoc, int infonou)
+{
+	if (crt == nullptr)
+		error("Lista vida");
+	LISTA p, q;
+	q = crt;
+	do{
+		p = q;
+		q = q->next;
+		if (q->info == infoc)break;
+	} while (q != crt);
+	if (q->info = infoc)
+	{
+		LISTA nou = new(nothrow) NOD;
+		if (nou == nullptr)
+			error("Spatiu insuficient");
+		nou->info = infonou;
+		nou->next = q;
+		p->next = nou;
+		if (crt == p)
+			crt = nou;
+	}
+	else
+		cout << "Informatia cautata nu a fost gasita";
+}
+void inseraredupa(LISTA& crt, int infoc, int infonou)
+{
+	if (crt == nullptr)
+		error("Lista vida");
+	LISTA q;
+	q = crt;
+	do {
+		q = q->next;
+		if (q->info = infoc)break;
+	} while (q != crt);
+	if (q != crt)
+	{
+		LISTA nou = new(nothrow) NOD;
+		if (nou == nullptr)
+			error("Alocare esuata");
+		nou->info = infonou;
+		nou->next = q->next;
+		q->next = nou;
+		if (q == crt)
+			crt = nou;
+	}
+	else cout << "Nu s a gasit informatia data";
+}
+void stergerenod(LISTA &crt,int infoc)
+{
+	if (crt == nullptr)
+		error("Lista vida");
+	LISTA p, q;
+	q = crt;
+	do {
+		p = crt;
+		q = q->next;
+		if (q->info == infoc)break;
+	} while (q != crt);
+	if (q->info == infoc)
+	{
+		if (q == q->next)
+		{
+			crt = nullptr;
+			delete q;
+		}
+		else
+		{
+			p->next = q->next;
+			if (q == crt)crt = p;
+			delete q;
+		}
+	}
+	else cout << "informatia nu a fost gasita";
+}
+void stergerelista(LISTA& crt)
+{
+	LISTA p;
+	while (crt != nullptr)
+	{
+		p = crt;
+		if (crt = crt->next)
+			crt = nullptr;
+		else
+			crt->next = crt->next->next;
+		delete p;
+	}
+}
+
+
+
+//liste circulare dublu inlantuiteeeeeeee
+struct NOD {
+	int info;
+	NOD* next;
+	NOD* back;
+};
+typedef NOD* LISTA;
+void error(const char msg[])
+{
+	cout << msg;
+	exit(1);
+}
+void adaugare(LISTA& crt, int infonou)
+{
+	LISTA nou = new(nothrow) NOD;
+	if (nou == nullptr)
+		error("Spatiu insuficient");
+	nou->info = infonou;
+	if (crt == nullptr)
+	{
+		crt = nou;
+		crt->next = nou;//legaturi noi
+		crt->back = nou;
+	}
+	else {
+		nou->next = crt->next;
+		nou->back = crt;
+		crt->next->back = nou;
+		crt->next = nou;
+		crt = nou;
+	}
+}
+LISTA creare()
+{
+	LISTA crt = nullptr;
+	int nrn, info;
+	cin >> nrn;
+	for (int i = 0; i < nrn; i++)
+	{
+		cin >> info;
+		adaugare(crt, info);
+	}
+	return crt;
+}
+void afisarelistasensorar(LISTA& crt)
+{
+	LISTA p = crt;
+	if (crt != nullptr)
+	{
+		do {
+			cout << p->info;
+			p = p->next;
+		} while (p != crt);
+		cout << endl;
+	}
+	else cout << "Lista e vida";
+}
+void afisarelistasensantiorar(LISTA& crt)
+{
+	LISTA p = crt;
+	if (crt != nullptr)
+	{
+		do {
+			cout << p->info;
+			p = p->back;
+		} while (p != crt);
+		cout << endl;
+	}
+	else
+		cout << "Lista e vida";
+}
+LISTA cautarenod(LISTA crt, int infoc)
+{
+	LISTA p = crt;
+	if (p != nullptr)
+	{
+		do {
+			if (p->info == infoc)return p;
+			p = p->next;
+		} while (p != crt);
+	}
+	return nullptr;
+}
+void adaugareinainte(LISTA &crt, int infoc, int infonou)
+{
+	if (crt == nullptr)
+		error("Lista vida");
+	LISTA q;
+	q = cautarenod(crt, infoc);
+	if (q != nullptr)
+	{
+		LISTA nou = new(nothrow) NOD;
+		if (nou == nullptr)
+			error("Spatiu insuficient");
+		nou->info = infonou;
+		nou->next = q;
+		nou->back = q->back;
+		q->back->next = nou;
+		q->back = nou;
+		if (q->back == crt)
+			crt = nou;
+	}
+	else cout << "Info cautata nu exista";
+}
+void adaugaredupa(LISTA& crt, int infoc, int infonou)
+{
+	if (crt == nullptr)
+		error("Lista vida");
+	LISTA q;
+	q = cautarenod(crt, infoc);
+	if (q != nullptr)
+	{
+		LISTA nou = new(nothrow) NOD;
+		if (nou == nullptr)
+			error("alocare esuata");
+		nou->info = infonou;
+		nou->next = q->next;
+		nou->back = q;
+		q->next->back = nou;
+		q->next = nou;
+		if (crt == q)
+			crt = nou;
+	}
+	else cout<<"Info inexistenta";
+}
+void stergerenod(LISTA& crt, int infoc)
+{
+	if (crt == nullptr)
+		error("Lista vida");
+	LISTA q;
+	q = cautarenod(crt, infoc);
+	if (q != nullptr)
+	{
+		if (q == q->next)
+			crt = nullptr;
+		else
+		{
+			q->next->back = q->back;
+			q->back->next = q->next;
+			if (crt == q)
+				crt = q->back;
+		}
+		delete q;
+	}
+	else cout << "info nu exista";
+}
+*/
+struct NOD {
+	int info;
+	NOD* next;
+};
+typedef NOD* LISTA;
+void error(const char msg[])
+{
+	cout << "Eroare" << endl;
+	cout << msg;
+	exit(1);
+}
+void adaugare(LISTA& vf, int infonou)
+{
+	cout << "ok";
+}
