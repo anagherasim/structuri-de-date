@@ -1,0 +1,111 @@
+//prob 4
+/*#include <iostream>
+#include <fstream>
+using namespace std;
+
+void citiredate(const char numefisier[], int**& A, int& n)
+{
+	ifstream fin(numefisier);
+	int i, j;
+	fin >> n;
+	A = new(nothrow) int* [n];
+	if (A == nullptr)
+	{
+		cout << "Alocare esuata" << endl;
+		exit(1);
+	}
+	for (i = 0; i < n; i++)
+	{
+		A[i] = new(nothrow) int[n];
+		if (A[i] == nullptr)
+		{
+			cout << "alocare esuata";
+			exit(1);
+		}
+		for (int j = 0; j < n; j++)
+			A[i][j] = 0;
+	}
+	while (fin >> i >> j)
+		{
+			A[i][j] = 1;
+			A[j][i] = A[i][j];
+		}
+	fin.close();
+	
+}
+int main()
+{
+	int n, i, j;
+	int** A;
+	citiredate("grafuri.txt", A, n);
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < j; j++)
+		{
+			cout << A[i][j] << " ";
+		}
+		cout << endl;
+	}
+	return 0;
+
+*/
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+void CitireDate(const char pb4in[], int**& A, int& n) {
+	ifstream in(pb4in);
+	int i, j;
+	in >> n;
+	A = new(nothrow) int* [n];
+	if (A == nullptr) {
+		cout << "Alocare esuata" << endl;
+		exit(1);
+	}
+	for (i = 0; i < n; i++) {
+		A[i] = new(nothrow) int[n];
+		if (A[i] == nullptr) {
+			cout << "Alocare esuata" << endl;
+			exit(1);
+		}
+		for (j = 0; j < n; j++) {
+			A[i][j] = 0;
+		}
+	}
+	while (in >> i >> j) {
+		A[i][j] = 1;
+		A[j][i] = A[i][j];
+	}
+	in.close();
+}
+
+int main()
+{
+	int n;
+	int** A;
+	CitireDate("grafuri.txt", A, n);
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cout << A[i][j] << " ";
+		}
+		cout << endl;
+	}
+	int s, max[10] = { 0 }, maxx = 0;
+	for (int i = 0; i < n; i++)
+	{
+		s = 0;
+		for (int j = 0; j < n; j++)
+			s = s + A[i][j];
+		max[i] = s;
+		if (maxx < s)
+			maxx = s;
+	}
+	cout << "nodurile cu rang maxim: ";
+	for (int i = 0; i < n; i++)
+		if (max[i] == maxx)
+			cout << i << " ";
+
+	return 0;
+}
+
+
